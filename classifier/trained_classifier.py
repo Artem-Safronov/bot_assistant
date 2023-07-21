@@ -25,3 +25,5 @@ def trained_classifier():
 
     with open("classifier/trained_models/trained_model.pkl", "wb") as file:
         pickle.dump(classifier, file)
+
+    return classifier, vectorizer
