@@ -16,6 +16,9 @@ async def text_classification(text, classifier, vectorizer):
 
     max_probabilities = sorted_classification_result[0]
     logger.info(f"Final intent and probability: {max_probabilities}")
-    final_intent = max_probabilities[1]
+    if max_probabilities[0] > 0.3:
+        final_intent = max_probabilities[1]
+    else:
+        final_intent = "global"
 
     return final_intent
