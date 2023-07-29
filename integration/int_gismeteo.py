@@ -1,6 +1,7 @@
 import logging
 import settings
 from integration.http_client import http_client
+import pymorphy2
 
 
 logging.basicConfig(level=logging.INFO)
@@ -16,10 +17,11 @@ class Gismeteo:
         self.entities = entities
 
     async def main(self):
-        location = self.entities.get('LOC')
-        logger.info(f"Location: {location}")
-        if location:
-            lat, lon = await self.get_geolocation(location)
+        city_name = self.entities.get('LOC')
+        logger.info(f"City name: {city_name}")
+        if city_name:
+            city_name = await self._to_nominative_case(city_name)
+            lat, lon = await self.get_geolocation(city_name)
             integration_response = await self.get_weather(lat, lon)
             parse_response = await self._parse_response(integration_response)
             return parse_response
@@ -61,3 +63,9 @@ class Gismeteo:
     async def _response_preparation(name="-", temp="-", description="-"):
         text = f"Город: {name}\nТемпература: {temp}\nОписание: {description}"
         return {"text": text}
+
+    @staticmethod
+    async def _to_nominative_case(city_name):
+        morph = pymorphy2.MorphAnalyzer()
+        parsed = morph.parse(city_name)[0]
+        return parsed.inflect({'nomn'}).word
