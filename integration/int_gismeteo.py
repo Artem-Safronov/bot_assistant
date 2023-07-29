@@ -61,7 +61,7 @@ class Gismeteo:
 
     @staticmethod
     async def _response_preparation(name="-", temp="-", description="-"):
-        text = f"Город: {name}\nТемпература: {temp}\nОписание: {description}"
+        text = f"В городе '{name}' на данный момент {description}. Температура воздуха {temp} ℃."
         return {"text": text}
 
     @staticmethod
