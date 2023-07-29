@@ -10,9 +10,10 @@ logger = logging.getLogger(__name__)
 
 class Kinopoisk:
 
-    def __init__(self):
+    def __init__(self, entities):
         self.url = "https://api.kinopoisk.dev/v1.3/movie"
         self.api_key = settings.API_TOKEN_KINOPOISK
+        self.entities = entities
 
     async def main(self):
         integration_response = await self.get_data()

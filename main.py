@@ -17,9 +17,9 @@ classifier, vectorizer = None, None
 @dp.message_handler()
 async def mes(message: types.Message):
     logging.info(f"received message: {message}")
-    intent = await text_classification(message.text, classifier, vectorizer)
+    intent, entities = await text_classification(message.text, classifier, vectorizer)
     logger.info(intent)
-    response = await base_integration(intent)
+    response = await base_integration(intent, entities)
     for res in response:
         text = res.get('text')
         poster = res.get('poster')

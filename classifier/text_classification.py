@@ -1,4 +1,5 @@
 import logging
+from classifier.extractor import entity_extraction
 
 
 logging.basicConfig(level=logging.INFO)
@@ -15,10 +16,13 @@ async def text_classification(text, classifier, vectorizer):
     sorted_classification_result = sorted(classification_result, reverse=True)
 
     max_probabilities = sorted_classification_result[0]
-    logger.info(f"Final intent and probability: {max_probabilities}")
+    logger.info(f"Max probability and intent: {max_probabilities}")
+
+    entities = await entity_extraction(text)
+
     if max_probabilities[0] > 0.3:
         final_intent = max_probabilities[1]
     else:
         final_intent = "global"
 
-    return final_intent
+    return final_intent, entities
