@@ -20,7 +20,7 @@ async def text_classification(text, classifier, vectorizer):
 
     entities = await entity_extraction(text)
 
-    if max_probabilities[0] > 0.3:
+    if max_probabilities[0] > 0.5:
         final_intent = max_probabilities[1]
     else:
         final_intent = "global"
