@@ -2,6 +2,7 @@ import logging
 import settings
 from integration.http_client import http_client
 import pymorphy2
+import re
 
 
 logging.basicConfig(level=logging.INFO)
@@ -20,12 +21,15 @@ class Gismeteo:
         city_name = self.entities.get('LOC')
         logger.info(f"City name: {city_name}")
         if city_name:
-            city_name = await self._to_nominative_case(city_name)
-            lat, lon = await self.get_geolocation(city_name)
-            integration_response = await self.get_weather(lat, lon)
-            parse_response = await self._parse_response(integration_response)
-            return parse_response
-        return [{"text": "intent"}]
+                try:
+                    city_name = await self._to_nominative_case(city_name)
+                    lat, lon = await self.get_geolocation(city_name)
+                except Exception as e:
+                    return [{"text": "Такого города не существует."}]
+                integration_response = await self.get_weather(lat, lon)
+                parse_response = await self._parse_response(integration_response)
+                return parse_response
+        return [{"text": "Какой город Вас интересует?"}]
 
     async def get_geolocation(self, location):
         params = {
@@ -61,7 +65,7 @@ class Gismeteo:
 
     @staticmethod
     async def _response_preparation(name="-", temp="-", description="-"):
-        text = f"В городе '{name}' на данный момент {description}. Температура воздуха {temp} ℃."
+        text = f"В городе {name} на данный момент {description}. Температура воздуха {int(round(temp, 0))} ℃."
         return {"text": text}
 
     @staticmethod
