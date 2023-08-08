@@ -14,12 +14,26 @@ dp = Dispatcher(bot)
 classifier, vectorizer = None, None
 
 
+@dp.message_handler(commands=["start"])
+async def start(message: types.Message):
+    logging.info(f"received message: {message}")
+    text = "Добрый день! Я — виртуальный ассистент «Савелий»."
+    await message.answer(text)
+
+
+@dp.message_handler(content_types=['photo'])
+async def photo(message: types.Message):
+    text = "Я еще не умею работать с картинками."
+    await message.answer(text)
+
+
 @dp.message_handler()
 async def mes(message: types.Message):
     logging.info(f"received message: {message}")
     intent, entities = await text_classification(message.text, classifier, vectorizer)
     logger.info(intent)
     response = await base_integration(intent, entities)
+    logger.info(response)
     for res in response:
         text = res.get('text')
         poster = res.get('poster')
