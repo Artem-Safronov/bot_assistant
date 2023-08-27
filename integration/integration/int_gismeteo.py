@@ -18,7 +18,7 @@ class Gismeteo:
         self.entities = entities
 
     async def main(self):
-        city_name = self.entities.get('LOC')
+        city_name = self.entities.get('LOC') or self.entities.get('ORG')
         logger.info(f"City name: {city_name}")
         if city_name:
                 try:

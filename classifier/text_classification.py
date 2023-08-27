@@ -1,3 +1,4 @@
+import json
 import logging
 from classifier.extractor import entity_extraction
 
@@ -6,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-async def text_classification(text, classifier, vectorizer):
+async def text_classification(text, classifier, vectorizer, context):
     test_features = vectorizer.transform([text])
 
     probabilities = classifier.predict_proba(test_features)[0]
@@ -22,6 +23,8 @@ async def text_classification(text, classifier, vectorizer):
 
     if max_probabilities[0] > 0.5:
         final_intent = max_probabilities[1]
+    elif context and json.loads(context[2])["intent"] == "weather" and (entities.get('LOC') or entities.get('ORG')):
+        final_intent = "weather"
     else:
         final_intent = "global"
 
