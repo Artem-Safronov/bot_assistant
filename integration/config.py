@@ -1,3 +1,4 @@
+from integration.integration.int_citations import Сitations
 from integration.integration.int_kinopoisk import Kinopoisk
 from integration.integration.int_gismeteo import Gismeteo
 from integration.integration.int_greeting import Greeting
@@ -11,4 +12,5 @@ INTEGRATION_CLASSES = {
     "greeting": Greeting,
     "goodbye": Goodbye,
     "global": Global,
+    "citations": Сitations,
 }
