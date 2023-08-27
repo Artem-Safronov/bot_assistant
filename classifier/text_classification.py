@@ -21,8 +21,16 @@ async def text_classification(text, classifier, vectorizer, context):
 
     entities = await entity_extraction(text)
 
-    if max_probabilities[0] > 0.5:
-        final_intent = max_probabilities[1]
+    if max_probabilities[0] >= 0.45:
+        if max_probabilities[1] == "repeat":
+            if context:
+                context = json.loads(context[2])
+                final_intent = context["intent"]
+                entities = context["entities"]
+            else:
+                final_intent = "global"
+        else:
+            final_intent = max_probabilities[1]
     elif context and json.loads(context[2])["intent"] == "weather" and (entities.get('LOC') or entities.get('ORG')):
         final_intent = "weather"
     else:
