@@ -4,6 +4,7 @@ from integration.integration.int_gismeteo import Gismeteo
 from integration.integration.int_greeting import Greeting
 from integration.integration.int_goodbye import Goodbye
 from integration.integration.int_global import Global
+from integration.integration.int_nasa import Nasa
 
 
 INTEGRATION_CLASSES = {
@@ -13,4 +14,5 @@ INTEGRATION_CLASSES = {
     "goodbye": Goodbye,
     "global": Global,
     "citations": Сitations,
+    "nasa": Nasa,
 }
