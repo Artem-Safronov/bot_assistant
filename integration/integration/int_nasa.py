@@ -15,6 +15,8 @@ class Nasa:
 
     async def main(self):
         integration_response = await self.get_data()
+        if not integration_response:
+            return [{"text": "Получение фотографии космоса временно не доступно."}]
         response_preparation = await self._response_preparation(integration_response)
         logger.info(f"nasa integration response: {integration_response}")
         return response_preparation
@@ -29,5 +31,5 @@ class Nasa:
     @staticmethod
     async def _response_preparation(integration_response):
         text = integration_response.get('title')
-        poster = integration_response.get('hdurl')
+        poster = integration_response.get('url')
         return [{"text": text, "poster": poster}]
