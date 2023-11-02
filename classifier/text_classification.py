@@ -1,10 +1,6 @@
 import json
-import logging
+from settings import logger
 from classifier.extractor import entity_extraction
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 async def text_classification(text, classifier, vectorizer, context):

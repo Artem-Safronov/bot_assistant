@@ -1,11 +1,7 @@
 import json
-from aiohttp import ClientSession, ClientTimeout
-import logging
 import traceback
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+from settings import logger
+from aiohttp import ClientSession, ClientTimeout
 
 
 async def http_client(method="GET", url=None, headers=None, params=None):

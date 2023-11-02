@@ -1,12 +1,8 @@
-import logging
 import settings
+from settings import logger
 from integration.http_client import http_client
 import pymorphy2
 import re
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 class Gismeteo:

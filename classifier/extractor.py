@@ -1,9 +1,5 @@
 from natasha import Doc, Segmenter, NewsEmbedding, NewsMorphTagger, NewsSyntaxParser, NewsNERTagger
-import logging
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+from settings import logger
 
 
 async def entity_extraction(text):

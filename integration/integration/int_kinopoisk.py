@@ -1,18 +1,13 @@
 import random
-import logging
-import settings
+from settings import API_TOKEN_KINOPOISK, logger
 from integration.http_client import http_client
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 class Kinopoisk:
 
     def __init__(self, entities):
         self.url = "https://api.kinopoisk.dev/v1.3/movie"
-        self.api_key = settings.API_TOKEN_KINOPOISK
+        self.api_key = API_TOKEN_KINOPOISK
         self.entities = entities
 
     async def main(self):

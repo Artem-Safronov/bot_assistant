@@ -1,5 +1,4 @@
-import logging
-import settings
+from settings import API_TOKEN, logger
 from aiogram import Bot, Dispatcher, executor, types
 from classifier.trained_classifier import trained_classifier
 from classifier.text_classification import text_classification
@@ -9,16 +8,13 @@ import sqlalchemy
 import asyncio
 
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-bot = Bot(settings.API_TOKEN)
+bot = Bot(API_TOKEN)
 dp = Dispatcher(bot)
 
 
 @dp.message_handler(commands=["start"])
 async def start(message: types.Message):
-    logging.info(f"received message: {message}")
+    logger.info(f"received message: {message}")
     text = "Добрый день! Я — виртуальный ассистент «Савелий»."
     await message.answer(text)
 
@@ -31,7 +27,7 @@ async def photo(message: types.Message):
 
 @dp.message_handler()
 async def mes(message: types.Message):
-    logging.info(f"received message: {message}")
+    logger.info(f"received message: {message}")
     id_user = message["from"]["id"]
     context = await db_client.fetch(sqlalchemy.text(f"SELECT * FROM context WHERE id_user = {id_user} ORDER BY id DESC"))
     logger.info(f"Context: {context}")

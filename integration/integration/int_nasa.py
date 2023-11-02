@@ -1,17 +1,12 @@
-import logging
-import settings
+from settings import API_TOKEN_NASA, logger
 from integration.http_client import http_client
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 class Nasa:
 
     def __init__(self, entities):
         self.url = "https://api.nasa.gov/planetary/apod"
-        self.api_key = settings.API_TOKEN_NASA
+        self.api_key = API_TOKEN_NASA
 
     async def main(self):
         integration_response = await self.get_data()

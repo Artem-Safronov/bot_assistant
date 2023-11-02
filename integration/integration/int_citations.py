@@ -1,9 +1,5 @@
-import logging
+from settings import logger
 from integration.http_client import http_client
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 class Сitations:
